@@ -6,16 +6,16 @@ load_dotenv()
 
 model = ChatGoogleGenerativeAI(model = "gemini-2.0-flash")
 
-tempalte = PromptTemplate(
-    template= "Give me  5 intresting facts about {topic} in one-one line and assign number before strating a new line",
+parser = StrOutputParser()
+
+temp = PromptTemplate(
+    template="Do you know about {topic} explain in a simple way ",
     input_variables=["topic"]
 )
 
-parser = StrOutputParser()
+chain = temp | model | parser
 
-chain = tempalte | model | parser
-
-res = chain.invoke({"topic":"UPSC"})
+res = chain.invoke({"topic":"jewar international airport"})
 
 print(res)
 
