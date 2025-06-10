@@ -13,9 +13,10 @@ prompt = PromptTemplate(
     input_variables=["topic"]
 )
 
-chain = prompt | llm | parser
 
-res = chain.invoke("Cricket")
-print(res)
+query = "what is cricket"
+res = prompt.invoke(query)
+
+print(llm.invoke(res))
 
 
