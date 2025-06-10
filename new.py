@@ -9,19 +9,23 @@ llm = ChatGoogleGenerativeAI(model = "gemini-2.0-flash")
 parser = StrOutputParser()
 
 prompt1 = PromptTemplate(
-    template="Give a detailed report on {topic}",
-    input_variables=["topic"]
+    template='Generate short and simple notes from the following text \n {text}',
+    input_variables=['text']
 )
 
 prompt2 = PromptTemplate(
-    template= "Give 5 important pointer of this followign text. {text}",
-    input_variables=["text"]
+    template='Generate 5 short question answers from the following text \n {text}',
+    input_variables=['text']
 )
 
+prompt3 = PromptTemplate(
+    template='Merge the provided notes and quiz into a single document \n notes -> {notes} and quiz -> {quiz}',
+    input_variables=['notes', 'quiz']
+)
 chain = prompt1 | llm | parser | prompt2 | llm | parser
 
 res = chain.invoke("Cricket")
+print(res)
 
 
-
-print(chain.get_graph().draw_ascii())
+#print(chain.get_graph().draw_ascii())
